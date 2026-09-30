@@ -1,0 +1,63 @@
+schema: spec-driven
+
+context: |
+  Linear Mappings
+  - Before creating a proposal, ensure the entire change is linked to one existing
+    Linear issue and both mappings are saved.
+  - Use OpenSpec-resolved roots for mapping paths: <projectRoot>/openspec/linear.yaml
+    stores team: { id, key, name } and project: { id, name };
+    <changeRoot>/linear.yaml stores issue: { id, identifier, url }.
+  - Read and reuse existing mappings; replace them only at the user's explicit request.
+  - If the project mapping is missing, discover available Linear teams and projects,
+    ask the user to select the team and project, and save the selection.
+  - If the change mapping is missing, ask the user to select an existing Linear issue
+    and save the selection.
+  - On a resumed session, read both mappings and existing artifacts, then continue
+    the unfinished step.
+  - Preserve unrelated metadata when saving mappings. Never save placeholder IDs or
+    create issues.
+
+rules:
+  proposal:
+    - Link the mapped issue by identifier and URL in the proposal.
+  design:
+    - |
+      Use the adrs skill at .agents/skills/adrs/SKILL.md for durable architectural
+      decisions. Read architecture/adrs/ and reuse accepted decisions; link relevant
+      ADRs from design.md. Create an ADR only when the design warrants a lasting
+      decision record, using the bundled MADR template. Keep routine implementation
+      choices in design.md and preserve decision status and supersession history.
+  tasks:
+    - |
+      When task creation is complete, move the mapped issue to Todo.
+      Skip a canceled issue.
+
+operations:
+  apply:
+    guidance:
+      - |
+        When implementation starts, move the mapped issue to In Progress and skip a
+        canceled issue.
+      - |
+        After implementation and successful verification, request human review and
+        move the mapped issue to In Review and
+        skip a canceled issue. Include the change reference, implementation summary,
+        and verification results in a review-request comment on that same issue.
+      - |
+        Before posting a review-request comment, inspect existing comments for the same
+        change and review request. Reuse an equivalent comment; update the existing
+        comment if its details need correction rather than posting a duplicate. If
+        comments cannot be checked, report the failure and do not post blindly.
+      - Do not mark the mapped issue Done during implementation or verification.
+  archive:
+    guidance:
+      - Require explicit human acceptance of the implemented change before archiving.
+      - |
+        Only after explicit human acceptance and a successful archive, move the mapped
+        issue to Done and skip a canceled issue.
+        Verification alone does not constitute acceptance.
+      - |
+        If archiving fails, do not mark the mapped issue Done; report the failure and
+        leave its status unchanged. If archiving succeeds but a Linear update
+        fails, report the archive success and the failed update separately without
+        claiming the issue is Done.
