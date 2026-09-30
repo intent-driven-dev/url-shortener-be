@@ -24,4 +24,4 @@
 
 ## 7. Delivery
 
-- [ ] 7.1 Document setup, dependencies, configuration, isolated storage provisioning/retention, genuine outage simulation, and the tested immutable implementation revision with verification commands/results; ignore runtime data and run strict OpenSpec validation.
+- [x] 7.1 Document setup, dependencies, configuration, isolated storage provisioning/retention, genuine outage simulation, and the tested immutable implementation revision with verification commands/results; ignore runtime data and run strict OpenSpec validation.
