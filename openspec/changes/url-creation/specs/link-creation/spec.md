@@ -2,6 +2,10 @@
 
 Provide the backend API for generating shareable short links from valid destinations and durably retaining their mappings for later resolution.
 
+## Assumptions
+
+Destination input is ASCII. This assumption does not require special validation or tests.
+
 ## ADDED Requirements
 
 ### Requirement: Create a public short link
@@ -13,7 +17,7 @@ The backend SHALL accept `POST /api/links` with `Content-Type: application/json`
 - **AND** the mapping has been durably stored before the success response
 
 #### Scenario: Create an HTTP destination link
-- **WHEN** a caller posts `{ "destinationUrl": "http://example.com/path?source=share#section" }` and storage is available
+- **WHEN** a caller posts `{ "destinationUrl": "http://www.manning.com/books/spec-driven-development" }` and storage is available
 - **THEN** the backend returns `201` with a short URL associated with that complete destination
 
 #### Scenario: Generated links retain their associations
@@ -63,5 +67,5 @@ The backend SHALL acknowledge creation only after its mapping is durably stored.
 The backend SHALL retain mappings for successfully created links across backend restart when restarted with the same storage. It SHALL preserve the complete destination, including its path, query, and fragment.
 
 #### Scenario: Resolve a link after backend restart
-- **WHEN** a link for `https://example.com/books/item?edition=2#details` is successfully created and the backend is restarted using the same storage
-- **THEN** following that short link returns a redirect to `https://example.com/books/item?edition=2#details`
+- **WHEN** a link for `https://www.manning.com/books/spec-driven-development?source=short-link#about` is successfully created and the backend is restarted using the same storage
+- **THEN** following that short link returns a redirect to `https://www.manning.com/books/spec-driven-development?source=short-link#about`

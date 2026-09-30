@@ -5,14 +5,14 @@ Expose backend usability and provide the configuration and storage lifecycle nee
 ## ADDED Requirements
 
 ### Requirement: Storage-aware health
-The backend SHALL expose `GET /health`, returning `200` when the backend is usable and required storage is available, and `503` otherwise. Health response body content is not prescribed.
+The backend SHALL expose `GET /health`, reading the current storage snapshot and returning `200` when that read succeeds and `503` when it fails. Health response body content is not prescribed.
 
 #### Scenario: Backend ready
-- **WHEN** a caller requests `/health` while the backend is usable and required storage is available
+- **WHEN** a caller requests `/health` and the current storage snapshot can be read
 - **THEN** the backend returns `200`
 
 #### Scenario: Storage unavailable
-- **WHEN** a caller requests `/health` while required storage is unavailable
+- **WHEN** a caller requests `/health` and the current storage snapshot cannot be read
 - **THEN** the backend returns `503`
 
 ### Requirement: Configurable backend and public addresses

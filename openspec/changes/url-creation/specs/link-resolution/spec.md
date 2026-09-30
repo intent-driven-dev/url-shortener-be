@@ -12,8 +12,8 @@ The backend SHALL serve `GET /s/{code}` without authentication, cookies, or cred
 - **THEN** the backend returns `302` with `Location` equal to the associated destination
 
 #### Scenario: Preserve the full destination
-- **WHEN** a caller requests the code associated with `https://example.com/books/item?edition=2&source=share#details`
-- **THEN** the backend returns `302` with `Location` equal to `https://example.com/books/item?edition=2&source=share#details`
+- **WHEN** a caller requests the code associated with `https://www.manning.com/books/spec-driven-development?source=short-link#about`
+- **THEN** the backend returns `302` with `Location` equal to `https://www.manning.com/books/spec-driven-development?source=short-link#about`
 
 ### Requirement: Report unknown short codes
 When storage is available and a code has no mapping, the backend SHALL return `404`, `Content-Type: application/json`, and `{error:{code,message}}`, where `code` is `NOT_FOUND` and `message` is a human-readable string.
